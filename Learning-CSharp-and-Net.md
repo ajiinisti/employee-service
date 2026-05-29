@@ -8,7 +8,7 @@ This document is created to help learn C# and .NET through a simple sample proje
 - Understand .NET project structure
 - Use minimal APIs in ASP.NET Core
 - Manage data with DTOs
-- Understand CRUD flow (Create, Read, Update, Delete)
+- Understand CRUD flow (Create, Read, Update, Delete) on .Net
 
 ## Topics
 
@@ -77,3 +77,42 @@ This document is created to help learn C# and .NET through a simple sample proje
 
 - This file is used to record key concepts and the learning flow.
 - Focus on understanding concepts, not only copying code.
+ 
+## Project Status & Roadmap
+
+- **Current state:** a simple in-memory minimal API demonstrating CRUD and manager/subordinate handling.
+- **Planned extensions:**
+   - Persist data to a database (e.g. SQLite, SQL Server, or PostgreSQL).
+   - Add repository/service layers and dependency injection to separate concerns.
+   - Implement migrations and seed data for reproducible environments.
+   - Add unit and integration tests (xUnit, TestServer) for endpoints and business logic.
+   - Add authentication/authorization if needed (JWT, roles/claims).
+   - Add CI workflow to run builds and tests automatically.
+
+## How the roadmap maps to learning goals
+
+- Implementing a database reinforces project structure and data modeling.
+- Moving logic into services and repositories teaches clean architecture and testability.
+- Writing tests improves debugging skills and confidence in changes.
+
+## Next steps (short-term)
+
+1. Add EF Core and a simple SQLite provider; create `Employee` entity and `DbContext`.
+2. Replace the in-memory `employees` list with a repository that uses `DbContext`.
+3. Add basic migration and seed scripts.
+4. Add a few unit tests covering manager reassignment and validation rules.
+
+## Notes for running and testing locally
+
+- To build without producing an `apphost` (helps when the exe is locked):
+
+```bash
+dotnet build /p:UseAppHost=false
+```
+
+- To run the API locally:
+
+```bash
+dotnet run --project EmployeeProject.Api
+```
+
