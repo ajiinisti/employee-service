@@ -82,25 +82,9 @@ This document is created to help learn C# and .NET through a simple sample proje
 
 - **Current state:** a simple in-memory minimal API demonstrating CRUD and manager/subordinate handling.
 - **Planned extensions:**
-   - Persist data to a database (e.g. SQLite, SQL Server, or PostgreSQL).
-   - Add repository/service layers and dependency injection to separate concerns.
-   - Implement migrations and seed data for reproducible environments.
-   - Add unit and integration tests (xUnit, TestServer) for endpoints and business logic.
-   - Add authentication/authorization if needed (JWT, roles/claims).
-   - Add CI workflow to run builds and tests automatically.
-
-## How the roadmap maps to learning goals
-
-- Implementing a database reinforces project structure and data modeling.
-- Moving logic into services and repositories teaches clean architecture and testability.
-- Writing tests improves debugging skills and confidence in changes.
-
-## Next steps (short-term)
-
-1. Add EF Core and a simple SQLite provider; create `Employee` entity and `DbContext`.
-2. Replace the in-memory `employees` list with a repository that uses `DbContext`.
-3. Add basic migration and seed scripts.
-4. Add a few unit tests covering manager reassignment and validation rules.
+   - Implementing a database reinforces project structure and data modeling.
+   - Moving logic into services and repositories teaches clean architecture and testability.
+   - Writing tests improves debugging skills and confidence in changes.
 
 ## Notes for running and testing locally
 
