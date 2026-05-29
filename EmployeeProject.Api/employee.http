@@ -1,0 +1,30 @@
+GET http://localhost:5215/employees
+
+###
+GET http://localhost:5215/employees/1
+
+###
+POST http://localhost:5215/employees
+Content-Type: application/json
+
+{
+    "name": "Charlie Davis",
+    "position": "Frontend Software Engineer",
+    "department": "IT",
+    "manager": 1
+}      
+
+
+###
+PUT http://localhost:5215/employees/1
+Content-Type: application/json
+
+{
+    "name": "John Doe Z",
+    "position": "Software Engineer Lead Senior",
+    "department": "IT",
+    "manager": 0
+}
+
+###
+DELETE http://localhost:5215/employees/4
