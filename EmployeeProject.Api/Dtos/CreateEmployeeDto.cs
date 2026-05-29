@@ -1,8 +1,9 @@
+using System.ComponentModel.DataAnnotations;
 namespace EmployeeProject.Api.Dtos;
 
 public record CreateEmployeeDto(
-    string Name,
-    string Position,
-    string Department,
-    int Manager
+    [Required][StringLength(50)] string Name,
+    [Required] string Position,
+    [Required] string Department,
+    [Range(0, int.MaxValue)] int Manager
 );
