@@ -1,4 +1,5 @@
 using EmployeeProject.Api.Dtos;
+using EmployeeProject.Api.Utilities;
 
 namespace EmployeeProject.Api.Endpoints;
 
@@ -84,7 +85,7 @@ public static class EmployeeEndpoints
         });
         group.MapPost("", (CreateEmployeeDto employee) =>
         {
-            if (!IsValidManager(employee.Manager, 0))
+            if (!UtilitiesFunction.IsValidManager(employee.Manager, 0, employees))
             {
                 return Results.BadRequest(new { Error = "Invalid manager id." });
             }
@@ -113,7 +114,7 @@ public static class EmployeeEndpoints
                 return Results.BadRequest(new { Error = "Employee cannot be their own manager." });
             }
 
-            if (!IsValidManager(updatedEmployee.Manager, id))
+            if (!UtilitiesFunction.IsValidManager(updatedEmployee.Manager, id, employees))
             {
                 return Results.BadRequest(new { Error = "Invalid manager id or manager chain would create a cycle." });
             }
@@ -137,69 +138,10 @@ public static class EmployeeEndpoints
                 return Results.NotFound();
             }
 
-            var reassigned = ReassignSubordinates(employee.Id, employee.Manager);
+            var reassigned = UtilitiesFunction.ReassignSubordinates(employee.Id, employee.Manager, employees);
             employees.Remove(employee);
             return Results.Ok(new { Deleted = employee, ReassignedSubordinates = reassigned });
         });
-
-        bool EmployeeExists(int id) => id == 0 || employees.Any(e => e.Id == id);
-
-        bool CreatesCycle(int employeeId, int managerId)
-        {
-            var currentManagerId = managerId;
-            while (currentManagerId != 0)
-            {
-                if (currentManagerId == employeeId)
-                {
-                    return true;
-                }
-
-                var manager = employees.FirstOrDefault(e => e.Id == currentManagerId);
-                if (manager is null)
-                {
-                    break;
-                }
-
-                currentManagerId = manager.Manager;
-            }
-
-            return false;
-        }
-
-        bool IsValidManager(int managerId, int employeeId)
-        {
-            if (managerId == 0)
-            {
-                return true;
-            }
-
-            if (!EmployeeExists(managerId))
-            {
-                return false;
-            }
-
-            if (employeeId != 0 && CreatesCycle(employeeId, managerId))
-            {
-                return false;
-            }
-
-            return true;
-        }
-
-        List<EmployeeDto> ReassignSubordinates(int deletedEmployeeId, int newManagerId)
-        {
-            var subordinates = employees.Where(e => e.Manager == deletedEmployeeId).ToList();
-            var updatedSubordinates = new List<EmployeeDto>();
-
-            foreach (var subordinate in subordinates)
-            {
-                var updatedSubordinate = subordinate with { Manager = newManagerId };
-                employees[employees.IndexOf(subordinate)] = updatedSubordinate;
-                updatedSubordinates.Add(updatedSubordinate);
-            }
-
-            return updatedSubordinates;
-        }
 
     }
 }
