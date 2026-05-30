@@ -45,3 +45,7 @@ publish/
 
 # Secret storage
 *.userprefs
+
+# db/storage & migrations file
+*.db
+Migrations/
